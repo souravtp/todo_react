@@ -1,0 +1,13 @@
+body {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.card {
+    max-width: 200px;
+}
+
+.footer-btn {
+    cursor: pointer;
+}

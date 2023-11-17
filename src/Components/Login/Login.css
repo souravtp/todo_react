@@ -1,0 +1,48 @@
+.content-wrapper {
+    text-align: center;
+}
+
+.input-container {
+    background-color: aquamarine;
+    padding: 30px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container input {
+    outline: none;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 40px;
+    border-radius: 12px;
+    padding-left: 15px;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.password-input {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    top: 22px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+
+.login-button {
+    background-color: blue;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 1rem;
+    border: none;
+    outline: none;
+    height: 40px;
+    padding: 0 15px;
+    cursor: pointer;
+}
