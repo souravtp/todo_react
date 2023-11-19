@@ -1,0 +1,9 @@
+.input-field {
+    border: none;
+    outline: none;
+    height: 35px;
+}
+
+.warning-text {
+    color: rgb(255, 0, 0);
+}

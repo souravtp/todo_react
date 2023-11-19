@@ -15,9 +15,8 @@ function Home() {
     const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
     const [deleteMessage, setDeleteMessage] = useState(null);
 
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
     const [displayAddModal, setDisplayAddModal] = useState(false)
+
 
     useEffect(() => {
         const fetchTodos = async () => {
@@ -28,8 +27,6 @@ function Home() {
                         Authorization: `Token ${token}`,
                     }
                 })
-
-                console.log(response.data)
                 setTodos(response.data)
 
             } catch (err) {
@@ -39,6 +36,8 @@ function Home() {
         fetchTodos();
     }, [])
 
+
+
     const showAddModal = () => {
         setDisplayAddModal(true)
     }
@@ -47,9 +46,19 @@ function Home() {
         setDisplayAddModal(false)
     }
 
-    const handleAdd = () => {
-        setTodos((prevTodos) => [...prevTodos, {title: title, description: description}])
-    }
+    const handleAdd = (newTodo) => {
+        setTodos([...todos, newTodo]);
+
+        try {
+            axios.post(`todos/create-todo`, newTodo, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+        }catch(err) {
+            alert(err)
+        }
+    };
 
 
     const handleDelete = (id) => {
@@ -79,7 +88,7 @@ function Home() {
     return (
         <div className='content-wrapper text-center d-flex flex-column justify-content-center align-items-center'>
             <h1>Todos</h1>
-            <button className='btn btn-primary' onClick={() => showAddModal() }>Add Todo</button>
+            <button className='btn btn-primary' onClick={() => showAddModal()}>Add Todo</button>
             <div className='container mt-3'>
                 <Row>
                     {todos.map((todo, index) => {
@@ -99,7 +108,7 @@ function Home() {
                     })}
                 </Row>
             </div>
-            <AddTodo showAddModal={displayAddModal} hideAddModal={hideAddModal} setTitle={setTitle} setDescription={setDescription} confirmAdd={handleAdd} setTodos={setTodos} />
+            <AddTodo displayAddModal={displayAddModal} hideAddModal={hideAddModal} handleAdd={handleAdd} />
             <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={handleDelete} hideModal={hideConfirmationModal} id={id} message={deleteMessage} />
         </div>
     )

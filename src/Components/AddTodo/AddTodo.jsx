@@ -1,36 +1,39 @@
 import { Button, Modal } from 'react-bootstrap'
 import { useState } from 'react';
 
-function AddTodo({showAddModal, hideAddModal, setTitle, setDescription, confirmAdd, setTodos  }) {
-    const [localTitle, setLocalTitle] = useState('');
-    const [localDescription, setLocalDescription] = useState('');
+function AddTodo({displayAddModal, hideAddModal, handleAdd }) {
+    const [localTitle, setLocalTitle] = useState('')
+    const [localDes, setLocalDes] = useState('')
+    const [localStat, setLocalStat] = useState(false)
 
-    const handleAddTodo = () => {
-        if (localTitle.trim() !== '') {
+    const handleSubmit = () => {
+        const newTodo = {title: localTitle, description: localDes, completed: localStat}
+        handleAdd(newTodo)
 
-        setTitle(localTitle);
-        setDescription(localDescription);
+        setLocalTitle('');
+        setLocalDes('');
+        setLocalStat(false);
 
-        setTodos((prevTodos) => [...prevTodos, { title: localTitle, description: localDescription }]);
-    }
+        hideAddModal();
     }
 
   return (
     <div>
-        <Modal show={showAddModal}>
+        <Modal show={displayAddModal} onHide={hideAddModal}>
             <Modal.Title className='d-flex justify-content-center'>
                 <input onChange={(e) => {setLocalTitle(e.target.value)}} className='mt-3' type="text" placeholder='Title' />
             </Modal.Title>
             <Modal.Body className='d-flex justify-content-center'>
-                <textarea onChange={(e) => {setLocalDescription(e.target.value)}} name="todo-text" placeholder='Description' cols="30" rows="10"></textarea>
+                <textarea onChange={(e) => {setLocalDes(e.target.value)}} name="todo-text" placeholder='Description' cols="30" rows="10"></textarea>
+                <input type="checkbox" onClick={(e) => setLocalStat(e.target.checked)} />
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={()=>handleAddTodo}>Save</Button>
-                <Button onClick={hideAddModal()}>Cancel</Button>
+                <Button onClick={handleSubmit} >Save</Button>
+                <Button onClick={hideAddModal}>Cancel</Button>
             </Modal.Footer>
         </Modal>
     </div>
   )
-}
+  }
 
 export default AddTodo

@@ -27,7 +27,6 @@ function Login() {
             // Handle the response from the backend
             if (response.status === 200) {
                 alert('login success!!')
-                console.log(response.data.user)
                 localStorage.setItem('token', response.data.token,);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
 
