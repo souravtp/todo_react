@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import axios from '../../api/axios'
 import './SignUp.css'
 
@@ -10,6 +10,7 @@ function SignUp() {
 
     const [usernameError, setUsernameError] = useState('')
     const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
 
     const navigate = useNavigate()
 
@@ -48,6 +49,12 @@ function SignUp() {
                     setEmailError(''); // Clear the error if no specific error
                 }
 
+                if (err.response.data && err.response.data.password) {
+                    setPasswordError(err.response.data.password.join(', '));
+                } else {
+                    setPasswordError('')
+                }
+
             } else if (err.request) {
                 // The request was made but no response was received
                 console.error('No response received:', err.request);
@@ -61,22 +68,27 @@ function SignUp() {
     }
 
     return (
-        <div className='content-wrapper d-flex justify-content-center align-items-center'>
-            <div className='sinup-container container bg-blue p-5'>
-                <h1>Signup</h1>
-                <div className="input-container d-flex flex-column">
-                    <input className='input-field' onChange={(e) => { setUsername(e.target.value) }} type="text" placeholder='Enter Username' />
-                    <br />
-                    <small className='warning-text'>{usernameError && <div className="error-message">{usernameError}</div>}</small>
-                    <br />
-                    <input className='input-field' onChange={(e) => { setEmail(e.target.value) }} type="email" placeholder='Enter Email' />
-                    <br />
-                    <small className='warning-text'>{emailError && <div className="error-message">{emailError}</div>}</small>
-                    <br />
-                    <input className='input-field' onChange={(e) => { setPassword(e.target.value) }} type="password" placeholder='Enter Password' />
+        <div className='content-wrapper d-flex flex-column justify-content-center align-items-center'>
+            <div className='signup-container row'>
+                <div className='col col-sm-12 col-md-12'>
+                    <h1>Signup</h1>
+                    <div className="input-container d-flex flex-column">
+                        <input className='input-field form-control' onChange={(e) => { setUsername(e.target.value) }} type="text" placeholder='Enter Username' />
+                        <br />
+                        <small className='warning-text'>{usernameError && <div className="error-message">{usernameError}</div>}</small>
+                        <br />
+                        <input className='input-field form-control' onChange={(e) => { setEmail(e.target.value) }} type="email" placeholder='Enter Email' />
+                        <br />
+                        <small className='warning-text'>{emailError && <div className="error-message">{emailError}</div>}</small>
+                        <br />
+                        <input className='input-field form-control' onChange={(e) => { setPassword(e.target.value) }} type="password" placeholder='Enter Password' />
+                        <br />
+                        <small className='warning-text'>{passwordError && <div className="error-message">{passwordError}</div>}</small>
+                        <button  className='mt-3 signup-button' onClick={handleSubmit} >Create User</button>
+                    </div>
                 </div>
-                <button className='btn btn-primary mt-3' onClick={handleSubmit} >Create User</button>
             </div>
+            <p className='mt-3'>Already have an account? <Link to='/login'>Login</Link></p>
         </div>
     )
 }

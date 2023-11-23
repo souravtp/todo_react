@@ -3,7 +3,9 @@ import SignUp from '../Components/SignUp/SignUp'
 
 function SignUpPage() {
   return (
-    <div><SignUp /></div>
+    <div>
+      <SignUp />
+    </div>
   )
 }
 

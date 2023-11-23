@@ -5,10 +5,12 @@ import { FaPencilAlt, FaTrash } from 'react-icons/fa'
 import './Home.css'
 import DeleteConfirmation from '../DeleteConfirmation/DeleteConfirmation'
 import AddTodo from '../AddTodo/AddTodo'
+import { useNavigate } from 'react-router-dom'
 
 
 function Home() {
     const [todos, setTodos] = useState([])
+
     const token = localStorage.getItem('token')
 
     const [id, setId] = useState(null);
@@ -16,6 +18,8 @@ function Home() {
     const [deleteMessage, setDeleteMessage] = useState(null);
 
     const [displayAddModal, setDisplayAddModal] = useState(false)
+
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -55,7 +59,7 @@ function Home() {
                     Authorization: `Token ${token}`
                 }
             })
-        }catch(err) {
+        } catch (err) {
             alert(err)
         }
     };
@@ -85,10 +89,19 @@ function Home() {
         setDisplayConfirmationModal(false)
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        navigate('/login')
+    }
+
     return (
-        <div className='content-wrapper text-center d-flex flex-column justify-content-center align-items-center'>
+        <div className='todo-wrapper text-center d-flex flex-column justify-content-center align-items-center'>
             <h1>Todos</h1>
-            <button className='btn btn-primary' onClick={() => showAddModal()}>Add Todo</button>
+            <div className='button-group'>
+                <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
+                <button className='btn btn-primary' onClick={() => showAddModal()}>Add Todo</button>
+            </div>
             <div className='container mt-3'>
                 <Row>
                     {todos.map((todo, index) => {

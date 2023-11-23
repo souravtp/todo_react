@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import './Login.css'
 import { useNavigate } from 'react-router-dom'
 import axios from '../../api/axios'
+import { InputGroup } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { AuthContext } from '../../Store/context'
 
 console.log(axios.defaults.baseURL);
 
@@ -26,11 +29,12 @@ function Login() {
             const response = await axios.post(LOGIN_URL, formData);
             // Handle the response from the backend
             if (response.status === 200) {
-                alert('login success!!')
+                alert('login success!')
                 localStorage.setItem('token', response.data.token,);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
 
-                navigate('/home')
+
+                navigate('/')
             } else {
                 alert('Incorrect email or password!')
             }
@@ -47,26 +51,31 @@ function Login() {
         }
     };
     return (
-        <div className='parent-container'>
-            <div className='content-wrapper'>
-                <h1 className='Title'>Welcome to Todo</h1>
-                <div className='input-container'>
-                    <input onChange={(e) => {
-                        setEmail(e.target.value)
-                    }} type="email" placeholder='email' />
-                    <br />
-                    <div className='password-input'>
-                        <input onChange={(e) => {
-                            setPassword(e.target.value)
-                        }} type={showPassword ? "text" : "password"} placeholder='password' />
-                        <span className='eye-icon' onClick={() => { setShowPassword(!showPassword) }}>
-                            {showPassword ? <FaEye /> : <FaEyeSlash />}
-                        </span>
+        <div className='content-wrapper d-flex flex-column justify-content-center align-items-center'>
+            <div className='login-container row'>
+                <div className="col-12 ">
+                    <h1 className='Title'>Login</h1>
+                    <div className='input-container'>
+                        <InputGroup>
+                            <input className='form-control' onChange={(e) => {
+                                setEmail(e.target.value)
+                            }} type="email" placeholder='email' />
+                        </InputGroup>
+                        <br />
+                        <InputGroup>
+                            <input className='form-control' onChange={(e) => {
+                                setPassword(e.target.value)
+                            }} type={showPassword ? "text" : "password"} placeholder='password' />
+                            <span className='eye-icon' onClick={() => { setShowPassword(!showPassword) }}>
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}
+                            </span>
+                        </InputGroup>
+                        <br />
+                        <button onClick={handleSubmit} className='login-button' type='submit'>Login</button>
                     </div>
-                    <br />
-                    <button onClick={handleSubmit} className='login-button' type='submit'>Login</button>
                 </div>
             </div>
+            <p className='mt-3'>Don't have an account? <Link to='/signup'>Signup</Link> </p>
         </div>
     )
 }
