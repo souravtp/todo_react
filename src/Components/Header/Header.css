@@ -1,8 +1,7 @@
 .navbar {
-    background: linear-gradient(to right, red, blue, green);
+    box-shadow: #ddd 5px 5px 15px 5px, #ddd -4px -5px 25px inset;
 }
 
 .greeting {
-    color: #fff;
     margin-left: 10px;
 }

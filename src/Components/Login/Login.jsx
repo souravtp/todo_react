@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import './Login.css'
 import { useNavigate } from 'react-router-dom'
 import axios from '../../api/axios'
 import { InputGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../../Store/context'
+
 
 console.log(axios.defaults.baseURL);
 
@@ -32,21 +32,19 @@ function Login() {
                 alert('login success!')
                 localStorage.setItem('token', response.data.token,);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
-
-
                 navigate('/')
             } else {
                 alert('Incorrect email or password!')
             }
         } catch (err) {
             if (!err?.response) {
-                alert("No server response")
+                alert("No server response.")
             } else if (err?.response?.status === 400) {
-                alert("Missing Username or Password")
+                alert("Missing Username or Password.")
             } else if (err?.response.status === 401) {
-                alert("Unauthorized")
+                alert("Incorrect email or password. Please check your credentials.")
             } else {
-                alert("Login failed!")
+                alert("Login failed. Please try again later.")
             }
         }
     };
@@ -71,7 +69,7 @@ function Login() {
                             </span>
                         </InputGroup>
                         <br />
-                        <button onClick={handleSubmit} className='login-button' type='submit'>Login</button>
+                        <button onClick={handleSubmit} className='shadow-button' type='submit'>Login</button>
                     </div>
                 </div>
             </div>
