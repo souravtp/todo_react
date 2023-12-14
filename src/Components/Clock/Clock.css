@@ -2,6 +2,8 @@
     margin-right: 10px;
     padding: 5px 20px;
     border-radius: 20px;
-    background: conic-gradient(green, rgb(152, 152, 255), red);
-    color: #fff
+}
+
+.time-text {
+    font-weight: 700;
 }

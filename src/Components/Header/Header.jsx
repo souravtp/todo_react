@@ -7,7 +7,7 @@ function Header() {
   const storedUser = JSON.parse(localStorage.getItem('user'))
   return (
     <>
-      <Nav className='navbar'>
+      <Nav className='navbar sticky-top'>
         <NavItem>
           <h1 className='greeting'>Welcome, {storedUser.username}</h1>
         </NavItem>

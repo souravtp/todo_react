@@ -17,7 +17,7 @@ function Clock() {
 
     return (
         <div className='time-container'>
-            <h1>{formattedTime}</h1>
+            <h1 className='time-text'>{formattedTime}</h1>
         </div>
     )
 }

@@ -42,7 +42,7 @@ function Home() {
     }, [])
 
 
-    //Add Logic 
+    //Add Logic
     const showAddModal = () => {
         setDisplayAddModal(true)
     }
@@ -51,15 +51,19 @@ function Home() {
         setDisplayAddModal(false)
     }
 
-    const handleAdd = (newTodo) => {
-        setTodos([...todos, newTodo]);
+    const handleAdd = async (newTodo) => {
 
         try {
-            axios.post(`todos/create-todo`, newTodo, {
+            const response = await axios.post(`todos/create-todo`, newTodo, {
                 headers: {
                     Authorization: `Token ${token}`
                 }
             })
+
+            const createdTodo = response.data
+
+            setTodos((prevTodos) => [...prevTodos, createdTodo])
+
         } catch (err) {
             alert(err)
         }
