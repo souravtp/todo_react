@@ -18,7 +18,7 @@ function Home() {
     const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
     const [deleteMessage, setDeleteMessage] = useState(null);
 
-    const [displayAddModal, setDisplayAddModal] = useState(false)
+    const [displayModal, setDisplayModal] = useState(false)
 
     const navigate = useNavigate()
 
@@ -43,12 +43,12 @@ function Home() {
 
 
     //Add Logic
-    const showAddModal = () => {
-        setDisplayAddModal(true)
+    const showModal = () => {
+        setDisplayModal(true)
     }
 
-    const hideAddModal = () => {
-        setDisplayAddModal(false)
+    const hideModal = () => {
+        setDisplayModal(false)
     }
 
     const handleAdd = async (newTodo) => {
@@ -72,17 +72,25 @@ function Home() {
     //edit logic
     const showEditModal = (todo) => {
         setSelectedTodo(todo);
-        showAddModal();
+        showModal();
     };
 
 
-    const handleUpdate = (updatedTodo) => {
-        setTodos((prevTodos) => prevTodos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo)));
-
+    const handleUpdate = async ({ updatedTodo, completeTodo }) => {
         // Make the API call to update the todo
-        // ...
+        try {
+            await axios.patch(`todos/update-todo/${updatedTodo.id}`, updatedTodo, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            }
+            )
+            setTodos((prevTodos) => prevTodos.map((todo) => (todo.id === completeTodo.id ? completeTodo : todo)));
+        } catch (err) {
+            console.log(err)
+        }
 
-        hideAddModal();
+        hideModal();
     };
 
     //Delete Logic
@@ -122,7 +130,7 @@ function Home() {
             <h1 className='mt-3'>Todos</h1>
             <div className='button-group'>
                 <button className='shadow-button' onClick={handleLogout}>Logout</button>
-                <button className='shadow-button' onClick={() => showAddModal()}>Add Todo</button>
+                <button className='shadow-button' onClick={() => showModal()}>Add Todo</button>
             </div>
             <div className='container mt-3'>
                 <Row>
@@ -147,7 +155,7 @@ function Home() {
                     })}
                 </Row>
             </div>
-            <AddTodo displayAddModal={displayAddModal} hideAddModal={hideAddModal} handleAdd={handleAdd} handleUpdate={handleUpdate} editTodo={selectedTodo !== null} existingTodo={selectedTodo} />
+            <AddTodo showAddModal={displayModal} hideAddModal={hideModal} handleAdd={handleAdd} handleUpdate={handleUpdate} editTodo={selectedTodo !== null} existingTodo={selectedTodo} />
             <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={handleDelete} hideModal={hideConfirmationModal} id={id} message={deleteMessage} />
         </div>
     )

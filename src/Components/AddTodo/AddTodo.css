@@ -1,11 +1,25 @@
 .todo-title {
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     border: 1px solid black;
     padding-left: 15px;
 }
 
 .todo-des {
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     border: 1px solid black;
     padding: 5px;
+}
+
+.checkbox-container {
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
 }

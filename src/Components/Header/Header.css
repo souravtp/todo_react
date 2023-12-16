@@ -1,5 +1,6 @@
 .navbar {
     box-shadow: #ddd 5px 5px 15px 5px, #ddd -4px -5px 25px inset;
+    background-color: #fff;
 }
 
 .greeting {

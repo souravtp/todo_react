@@ -14,6 +14,9 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [nonFieldError, setNonFieldError] = useState('')
     const navigate = useNavigate()
     const LOGIN_URL = 'user/login'
 
@@ -39,12 +42,24 @@ function Login() {
         } catch (err) {
             if (!err?.response) {
                 alert("No server response.")
-            } else if (err?.response?.status === 400) {
-                alert("Missing Username or Password.")
-            } else if (err?.response.status === 401) {
-                alert("Incorrect email or password. Please check your credentials.")
             } else {
-                alert("Login failed. Please try again later.")
+                if (err?.response?.data && err?.response?.data?.email) {
+                    setEmailError(err?.response?.data?.email)
+                } else {
+                    setEmailError('')
+                }
+
+                if (err.response.data && err.response.data.password) {
+                    setPasswordError(err.response.data.password);
+                } else {
+                    setPasswordError('')
+                }
+
+                if (err?.response.status === 401 && err?.response?.data?.detail) {
+                    setNonFieldError(err?.response?.data?.detail)
+                } else {
+                    setNonFieldError('')
+                }
             }
         }
     };
@@ -59,6 +74,7 @@ function Login() {
                                 setEmail(e.target.value)
                             }} type="email" placeholder='email' />
                         </InputGroup>
+                        <small className='warning-text'>{emailError && <div className="error-message">{emailError}</div>}</small>
                         <br />
                         <InputGroup>
                             <input className='form-control' onChange={(e) => {
@@ -68,7 +84,9 @@ function Login() {
                                 {showPassword ? <FaEye /> : <FaEyeSlash />}
                             </span>
                         </InputGroup>
+                        <small className='warning-text'>{passwordError && <div className="error-message">{passwordError}</div>}</small>
                         <br />
+                        <small className='warning-text'>{nonFieldError && <div className="error-message">{nonFieldError}</div>}</small>
                         <button onClick={handleSubmit} className='shadow-button' type='submit'>Login</button>
                     </div>
                 </div>
