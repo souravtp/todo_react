@@ -33,11 +33,11 @@ function AddTodo({ showAddModal, hideAddModal, handleAdd, editTodo, existingTodo
                 updatedTodo.description = localDes
             }
 
-            if (localStat !== existingTodo.status) {
-                updatedTodo.status = localStat
+            if (localStat !== existingTodo.completed) {
+                updatedTodo.completed = localStat
             }
 
-            const completeTodo = { id: existingTodo.id, title: localTitle, description: localDes, status: localStat }
+            const completeTodo = { id: existingTodo.id, title: localTitle, description: localDes, completed: localStat }
 
             // Call the update handler if editTodo is true
             handleUpdate({ updatedTodo: updatedTodo, completeTodo: completeTodo });
@@ -53,6 +53,14 @@ function AddTodo({ showAddModal, hideAddModal, handleAdd, editTodo, existingTodo
         }
     }
 
+    const handleCancel = () => {
+        setLocalTitle(existingTodo.title);
+        setLocalDes(existingTodo.description);
+        setLocalStat(existingTodo.completed);
+
+        hideAddModal()
+    }
+
     return (
         <div>
             <Modal show={showAddModal} onHide={hideAddModal}>
@@ -63,12 +71,12 @@ function AddTodo({ showAddModal, hideAddModal, handleAdd, editTodo, existingTodo
                     <textarea className='todo-des' onChange={(e) => { setLocalDes(e.target.value) }} name="todo-text" placeholder='Description' cols="30" rows="10" value={localDes}></textarea>
                     <div className='checkbox-container'>
                         <label htmlFor="iscomplete">Completed</label>
-                        <input id='iscomplete' type="checkbox" onClick={(e) => setLocalStat(e.target.checked)} defaultChecked={localStat} />
+                        <input id='iscomplete' type="checkbox" onChange={(e) => setLocalStat(e.target.checked)} checked={localStat} />
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleSubmit} >Save</Button>
-                    <Button onClick={hideAddModal}>Cancel</Button>
+                    <Button onClick={handleCancel}>Cancel</Button>
                 </Modal.Footer>
             </Modal>
         </div>
