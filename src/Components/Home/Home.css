@@ -13,6 +13,14 @@ body {
     box-shadow: #ddd 5px 5px 15px 5px, #ddd -4px -5px 25px inset;
 }
 
+.task-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .custom-card-footer {
     border-top: none !important;
     background-color: transparent !important;

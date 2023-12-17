@@ -139,7 +139,7 @@ function Home() {
                             <Col key={index} xs={12} sm={6} md={4} lg={3} >
                                 <div className='custom-card card mb-3' >
                                     <h3>{todo.title}</h3>
-                                    <p>{todo.description}</p>
+                                    <p className='task-description'>{todo.description}</p>
                                     {todo.completed ? <span className='status-c'>Completed</span> : <span className='status-p'>Pending</span>}
                                     <div className='custom-card-footer card-footer d-flex justify-content-around'>
                                         <div className='btn-container'>
