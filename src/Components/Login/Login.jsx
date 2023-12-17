@@ -7,8 +7,6 @@ import { InputGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 
-console.log(axios.defaults.baseURL);
-
 
 function Login() {
     const [email, setEmail] = useState('')

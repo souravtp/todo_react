@@ -29,13 +29,11 @@ function SignUp() {
             if (response.status === 201) {
                 alert('user created successfully')
                 navigate('/login')
-                console.log(response.data)
             }
         } catch (err) {
             if (err.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
-                console.error('Error response from server:', err.response.data);
 
                 if (err.response.data && err.response.data.username) {
                     setUsernameError(err.response.data.username.join(', '));
@@ -57,11 +55,9 @@ function SignUp() {
 
             } else if (err.request) {
                 // The request was made but no response was received
-                console.error('No response received:', err.request);
                 alert('No response received from the server.');
             } else {
                 // Something happened in setting up the request that triggered an Error
-                console.error('Request setup error:', err.message);
                 alert('An error occurred while setting up the request.');
             }
         }
